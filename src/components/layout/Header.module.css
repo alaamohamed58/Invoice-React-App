@@ -1,0 +1,22 @@
+header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: var(--secondary-color);
+  min-width: 90px;
+  height: 100%;
+  border-radius: 30px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  overflow: hidden;
+  z-index: 99;
+}
+.icon {
+  width: 100%;
+  padding: 25px;
+  background-color: var(--main-color);
+}
+.icon svg {
+  color: #fff;
+  font-size: 30px;
+}
