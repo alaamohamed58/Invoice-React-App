@@ -18,7 +18,7 @@ const InoiceInform = () => {
   const invoiceItem = inputFields.find((el) => el.id === params.invoiceId);
 
   const { isPending, id } = invoiceItem;
-  console.log(invoiceItem);
+
   if (!invoiceItem) {
     navigate("/invoice");
   }
@@ -29,7 +29,6 @@ const InoiceInform = () => {
 
   const statusHandeler = () => {
     dispatch(invoiceAction.changePendingState({ id, isPending }));
-    console.log(`this is status ${isPending}`);
 
     //setPendingState((prevState) => !prevState);
   };

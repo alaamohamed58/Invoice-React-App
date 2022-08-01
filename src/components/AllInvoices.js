@@ -18,7 +18,6 @@ const AllInvoices = () => {
   useEffect(() => {
     filterHandeler();
   }, [selectInput, invoiceArray]);
-  console.log(`this is pending ${isPending}`);
 
   const formToggleHandeler = () => {
     dispatch(uiActions.toggleForm());
@@ -52,8 +51,8 @@ const AllInvoices = () => {
           </div>
           <div className={classes.actions}>
             <div>
-              <label>filter by</label>
-              <select onChange={selectHandeler} value={selectInput}>
+              <label htmlFor="filter">filter by</label>
+              <select id="filter" onChange={selectHandeler} value={selectInput}>
                 <option value="all">All</option>
                 <option value="pending">Pending</option>
                 <option value="paid">Paid</option>

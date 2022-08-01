@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { invoiceAction } from "./store/actions";
@@ -18,7 +18,7 @@ const options = [
 const EditInvoice = ({ id }) => {
   const invoiceList = useSelector((state) => state.action.value);
   const editingInovoice = invoiceList.find((invoice) => invoice.id === id);
-  console.log(editingInovoice);
+
   const [invoiceInputs, setInvoiceInputs] = useState({
     streetAddress: editingInovoice.streetAddress,
     city: editingInovoice.city,
@@ -32,14 +32,18 @@ const EditInvoice = ({ id }) => {
     clientCountry: editingInovoice.clientCountry,
     productionDescription: editingInovoice.productionDescription,
   });
-  const [inputFields, setInputFields] = useState([
-    {
-      id: editingInovoice.items.id,
-      itemName: editingInovoice.items.itemName,
-      qty: editingInovoice.items.qty,
-      price: editingInovoice.items.price,
-    },
-  ]);
+
+  console.log(editingInovoice.paymentDue);
+
+  const [inputFields, setInputFields] = useState(
+    editingInovoice.items.map(({ itemName, qty, price }) => ({
+      itemName,
+      qty,
+      price,
+    }))
+  );
+
+  console.log(editingInovoice.items);
   const [dateTime] = useState(new Date());
   const [paymentDue, setPaymentDue] = useState(options);
   const [dateNow, setDateNow] = useState();
@@ -85,7 +89,6 @@ const EditInvoice = ({ id }) => {
     setInputFields([
       ...inputFields,
       {
-        id: "",
         itemName: "",
         qty: "",
         price: "",
@@ -95,28 +98,6 @@ const EditInvoice = ({ id }) => {
 
   const submitHandeler = (e) => {
     e.preventDefault();
-    setInputFields([
-      {
-        id: "",
-        itemName: "",
-        qty: "",
-        price: "",
-      },
-    ]);
-
-    setInvoiceInputs({
-      streetAddress: "",
-      city: "",
-      Zcode: "",
-      country: "",
-      clientName: "",
-      clientMail: "",
-      clientAddress: "",
-      clientCity: "",
-      clientZcode: "",
-      clientCountry: "",
-      productionDescription: "",
-    });
   };
 
   const removeHandeler = (index) => {
@@ -148,7 +129,6 @@ const EditInvoice = ({ id }) => {
       })
     );
     dispatch(uiActions.toggleForm());
-    navigate("/");
   };
   const hideFromHandeler = () => {
     dispatch(uiActions.toggleForm());
@@ -318,11 +298,10 @@ const EditInvoice = ({ id }) => {
 
           <div className={classes.payment_terms}>
             <label>Payment Terms</label>
-            <select onChange={dateChangeHandeler}>
+            <select onChange={dateChangeHandeler} value={paymentDue}>
               {options.map((el, index) => {
                 return (
                   <option key={index} value={el.value}>
-                    {" "}
                     {el.text}
                   </option>
                 );
@@ -350,7 +329,7 @@ const EditInvoice = ({ id }) => {
               <li>Total</li>
             </ul>
             {inputFields.map((inputField, index) => (
-              <div key={inputField.id}>
+              <div key={index}>
                 <ul>
                   <li>
                     <Input

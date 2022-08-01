@@ -24,13 +24,13 @@ const Form = () => {
     paymentDue: "",
   });
   const [inputFields, setInputFields] = useState([
-    { id: Math.random(), itemName: "", qty: "", price: "" },
+    { itemName: "", qty: "", price: "" },
   ]);
   const [dateTime] = useState(new Date());
-  const [paymentTerms, setPaymentTerms] = useState("--choose an option--");
-
+  //const [paymentTerms, setPaymentTerms] = useState("");
+  const [payTerms, setPayTerms] = useState("--choose an option--");
   const dateChangeHandeler = (e) => {
-    setPaymentTerms(e.target.value);
+    setPayTerms(e.target.value);
     let dateWillUpdate = new Date();
 
     if (e.target.value === "Net 30 Days") {
@@ -74,7 +74,6 @@ const Form = () => {
     setInputFields([
       ...inputFields,
       {
-        id: Math.random(),
         itemName: "",
         qty: "",
         price: "",
@@ -86,7 +85,6 @@ const Form = () => {
     e.preventDefault();
     setInputFields([
       {
-        id: "",
         itemName: "",
         qty: "",
         price: "",
@@ -94,6 +92,7 @@ const Form = () => {
     ]);
 
     setInvoiceInputs({
+      id: "",
       streetAddress: "",
       city: "",
       Zcode: "",
@@ -122,7 +121,7 @@ const Form = () => {
   const addInvoiceHandeler = () => {
     dispatch(
       invoiceAction.onAddName({
-        id: Math.random().toString().substring(6, 11),
+        id: Math.random().toString().substring(6, 12),
         streetAddress: invoiceInputs.streetAddress,
         city: invoiceInputs.city,
         Zcode: invoiceInputs.Zcode,
@@ -307,8 +306,8 @@ const Form = () => {
 
           <div className={classes.payment_terms}>
             <label>Payment Terms</label>
-            <select onChange={dateChangeHandeler} value={paymentTerms}>
-              <option value="">--choose an option--</option>
+            <select onChange={dateChangeHandeler} value={payTerms}>
+              <option value="--choose an option--">--choose an option--</option>
               <option value="Net 30 Days">Net 30 Days</option>
               <option value="Net 60 Days">Net 60 Days</option>
             </select>
@@ -334,7 +333,7 @@ const Form = () => {
               <li>Total</li>
             </ul>
             {inputFields.map((inputField, index) => (
-              <div key={inputField.id}>
+              <div key={index}>
                 <ul>
                   <li>
                     <Input

@@ -4,7 +4,7 @@ import InvoiceItem from "./InvoiceItem";
 import classes from "./InvoiceBar.module.css";
 const InvoiceBar = ({ filtered }) => {
   let inputFields = useSelector((state) => state.action.value);
-  console.log(inputFields);
+
   return (
     <Fragment>
       <ul className={classes.categories}>
