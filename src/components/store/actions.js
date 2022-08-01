@@ -67,6 +67,7 @@ const actionSlice = createSlice({
         clientCountry,
         productionDescription,
         items,
+        paymentDue,
       } = action.payload;
       const existingInvoice = state.value.find((invoice) => invoice.id === id);
       state.changed = true;
@@ -85,6 +86,7 @@ const actionSlice = createSlice({
         existingInvoice.productionDescription = productionDescription;
         existingInvoice.clientAddress = clientAddress;
         existingInvoice.items = items;
+        existingInvoice.paymentDue = paymentDue;
       }
     },
   },

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { invoiceAction } from "./store/actions";
@@ -7,18 +7,17 @@ import Input from "./UI/Inputs";
 import classes from "./Form.module.css";
 import { BsPlusLg } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
-import { Navigate } from "react-router-dom";
 
-const options = [
-  { value: "", text: "--choose an option--" },
-  { value: "Net 30 Days", text: "Net 30 Days" },
-  { value: "Net 60 Days", text: "Net 60 Days" },
-];
+// const options = [
+//   { value: "", text: "--choose an option--" },
+//   { value: "Net 30 Days", text: "Net 30 Days" },
+//   { value: "Net 60 Days", text: "Net 60 Days" },
+// ];
 
 const EditInvoice = ({ id }) => {
   const invoiceList = useSelector((state) => state.action.value);
   const editingInovoice = invoiceList.find((invoice) => invoice.id === id);
-
+  //console.log(editingInovoice.paymentDue);
   const [invoiceInputs, setInvoiceInputs] = useState({
     streetAddress: editingInovoice.streetAddress,
     city: editingInovoice.city,
@@ -31,10 +30,9 @@ const EditInvoice = ({ id }) => {
     clientZcode: editingInovoice.clientZcode,
     clientCountry: editingInovoice.clientCountry,
     productionDescription: editingInovoice.productionDescription,
+    paymentDue: editingInovoice.paymentDue,
   });
-
-  console.log(editingInovoice.paymentDue);
-
+  //console.log(invoiceInputs);
   const [inputFields, setInputFields] = useState(
     editingInovoice.items.map(({ itemName, qty, price }) => ({
       itemName,
@@ -43,9 +41,8 @@ const EditInvoice = ({ id }) => {
     }))
   );
 
-  console.log(editingInovoice.items);
   const [dateTime] = useState(new Date());
-  const [paymentDue, setPaymentDue] = useState(options);
+  const [paymentDue, setPaymentDue] = useState("--choose an option--");
   const [dateNow, setDateNow] = useState();
 
   const dateChangeHandeler = (e) => {
@@ -75,7 +72,14 @@ const EditInvoice = ({ id }) => {
       );
     }
 
-    return dateWillUpdate;
+    return setInvoiceInputs({
+      ...invoiceInputs,
+      paymentDue: dateWillUpdate.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }),
+    });
   };
 
   const handleChangeInput = (e, index) => {
@@ -109,7 +113,7 @@ const EditInvoice = ({ id }) => {
   let showForm = useSelector((state) => state.ui.formIsVisible);
   let wrapperClass = `${classes.wrapper} ${showForm ? classes.active : ""} `;
   //actions
-  const navigate = useNavigate();
+
   const editInvoiceHandeler = () => {
     dispatch(
       invoiceAction.editInvoice({
@@ -125,6 +129,7 @@ const EditInvoice = ({ id }) => {
         clientZcode: invoiceInputs.clientZcode,
         clientCountry: invoiceInputs.clientCountry,
         productionDescription: invoiceInputs.productionDescription,
+        paymentDue: invoiceInputs.paymentDue,
         items: inputFields,
       })
     );
@@ -292,20 +297,16 @@ const EditInvoice = ({ id }) => {
               id="pay-due"
               label="Payment Due"
               readOnly
-              value={dateNow}
+              value={invoiceInputs.paymentDue}
             />
           </div>
 
           <div className={classes.payment_terms}>
             <label>Payment Terms</label>
             <select onChange={dateChangeHandeler} value={paymentDue}>
-              {options.map((el, index) => {
-                return (
-                  <option key={index} value={el.value}>
-                    {el.text}
-                  </option>
-                );
-              })}
+              <option value="--choose an option--">--choose an option--</option>
+              <option value="Net 30 Days">Net 30 Days</option>
+              <option value="Net 60 Days">Net 60 Days</option>
             </select>
           </div>
           <Input

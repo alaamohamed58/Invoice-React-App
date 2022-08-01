@@ -12,13 +12,13 @@ const InoiceInform = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const inputFields = useSelector((state) => state.action.value);
-  const statuss = inputFields.map((el) => el.status);
+
   const params = useParams();
 
   const invoiceItem = inputFields.find((el) => el.id === params.invoiceId);
 
   const { isPending, id } = invoiceItem;
-
+  console.log(invoiceItem);
   if (!invoiceItem) {
     navigate("/invoice");
   }

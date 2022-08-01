@@ -5,6 +5,7 @@
   --text-gray: #cdcdde;
   --text-muted: #565674;
   --secondary-color: #1e2139;
+  --form-color: #141625;
   --dark-purple: #252945;
   --text: #dfe3fa;
   --pending-color: #3f3a2b;
@@ -13,6 +14,14 @@
   --paid-logo: #33d69f40;
   --danger: #ec5757;
   --category-color: #474761;
+}
+
+[data-theme="light"] {
+  --main-color: #000;
+  --background-color: #fff;
+  --text-gray: blue;
+  --text: orange;
+  --secondary-color: rgb(255, 255, 255);
 }
 
 * {

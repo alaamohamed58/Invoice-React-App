@@ -27,7 +27,7 @@
 }
 .button {
   padding: 8px 10px;
-  background-color: #7c5dfa;
+  background-color: var(--main-color);
   border-radius: 40px;
   color: #fff;
   display: flex;

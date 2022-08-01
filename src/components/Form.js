@@ -27,7 +27,7 @@ const Form = () => {
     { itemName: "", qty: "", price: "" },
   ]);
   const [dateTime] = useState(new Date());
-  //const [paymentTerms, setPaymentTerms] = useState("");
+
   const [payTerms, setPayTerms] = useState("--choose an option--");
   const dateChangeHandeler = (e) => {
     setPayTerms(e.target.value);
