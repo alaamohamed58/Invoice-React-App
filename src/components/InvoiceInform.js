@@ -8,7 +8,7 @@ import { invoiceAction } from "./store/actions";
 import { uiActions } from "./store/Ui-slice";
 import EditInvoice from "./EditInvoice";
 
-const InoiceInform = () => {
+const InoviceInform = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const inputFields = useSelector((state) => state.action.value);
@@ -136,4 +136,4 @@ const InoiceInform = () => {
     </Fragment>
   );
 };
-export default InoiceInform;
+export default InoviceInform;
