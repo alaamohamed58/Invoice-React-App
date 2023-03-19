@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { invoiceAction } from "./store/actions";
-import { uiActions } from "./store/Ui-slice";
+import { invoiceAction } from "../store/actions";
+import { uiActions } from "../store/Ui-slice";
 import Input from "./UI/Inputs";
 import classes from "./Form.module.css";
 import { BsPlusLg } from "react-icons/bs";
@@ -117,7 +117,6 @@ const Form = () => {
   let showForm = useSelector((state) => state.ui.formIsVisible);
   let wrapperClass = `${classes.wrapper} ${showForm ? classes.active : ""} `;
   //actions
-
   const addInvoiceHandeler = () => {
     dispatch(
       invoiceAction.onAddName({
@@ -149,7 +148,6 @@ const Form = () => {
         <h1>New Invoice</h1>
         <div>
           <h4>Bill From</h4>
-
           <Input
             type="text"
             id="street-address"
@@ -204,7 +202,6 @@ const Form = () => {
 
         <div>
           <h4>Bill to</h4>
-
           <Input
             type="text"
             id="client-name"
@@ -366,7 +363,6 @@ const Form = () => {
                 </ul>
               </div>
             ))}
-
             <button type="button" onClick={handleAddFields}>
               <BsPlusLg /> Add New Item
             </button>

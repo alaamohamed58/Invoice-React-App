@@ -3,27 +3,29 @@ import { Fragment, memo } from "react";
 import InvoiceItem from "./InvoiceItem";
 import classes from "./InvoiceBar.module.css";
 const InvoiceBar = ({ filtered }) => {
-  let inputFields = useSelector((state) => state.action.value);
+  let { data } = useSelector((state) => state.invoiceReducer);
 
   return (
     <Fragment>
       <ul className={classes.categories}>
         <li>ORDER ID</li>
-        <li>CREATED</li>
+        <li>CREATED AT</li>
         <li>CUSTOMER</li>
         <li>TOTAL</li>
         <li>STATUS</li>
       </ul>
-      {filtered.map((item) => (
-        <InvoiceItem
-          id={item.id}
-          key={item.id}
-          name={item.clientName}
-          items={item.items}
-          date={item.date}
-          status={item.isPending}
-        />
-      ))}
+      {data &&
+        data.data &&
+        data.data.invoices.map((item) => (
+          <InvoiceItem
+            id={item._id.substring(0, 5)}
+            key={item._id}
+            name={item.client_name}
+            items={item.items}
+            date={item.created_at}
+            status={item.status}
+          />
+        ))}
     </Fragment>
   );
 };

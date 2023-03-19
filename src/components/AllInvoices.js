@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import classes from "./AllInvoices.module.css";
 import { IoIosAdd } from "react-icons/io";
 import InvoiceBar from "./InvoiceBar";
-import { uiActions } from "./store/Ui-slice";
+import { uiActions } from "../store/Ui-slice";
+import { fetchInvoices, getInvoices } from "../store/invoice-slice";
 const AllInvoices = () => {
   const [selectInput, setSelectInput] = useState("all");
   const [filter, setFilter] = useState([]);
@@ -12,9 +13,16 @@ const AllInvoices = () => {
   const isPending = useSelector((state) =>
     state.action.value.map((el) => el.isPending)
   );
-
   const invoiceArray = useSelector((state) => state.action.value);
+
   const dispatch = useDispatch();
+
+  const { data } = useSelector((state) => state.invoiceReducer);
+
+  useEffect(() => {
+    dispatch(getInvoices());
+  }, []);
+
   useEffect(() => {
     filterHandeler();
   }, [selectInput, invoiceArray]);
@@ -47,7 +55,7 @@ const AllInvoices = () => {
         <div className={classes.invoices}>
           <div>
             <h1>Invoices</h1>
-            <p>There are {invoiceNumber} total invoices</p>
+            <p>There are {data && data.count} total invoices</p>
           </div>
           <div className={classes.actions}>
             <div>

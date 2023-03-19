@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import classes from "./InvoiceItem.module.css";
@@ -17,12 +17,9 @@ const InvoiceItem = ({ items, status, name, date, id }) => {
     <div className={classes.bar}>
       <ul>
         <li> #{id} </li>
-        <li> {date} </li>
+        <li> {new Date(date).toLocaleDateString()} </li>
         <li> {name} </li>
-        <li>
-          $
-          {items.map((el) => +el.qty * +el.price).reduce((curr, i) => curr + i)}{" "}
-        </li>
+        <li>${items.map((el) => el.total)} </li>
         <li>
           <div className={status ? "status" : "status paid"}>
             <span> {status ? "Pending" : "Paid"} </span>
@@ -56,9 +53,9 @@ const InvoiceItem = ({ items, status, name, date, id }) => {
             {items.map((el, i) => {
               return (
                 <ul key={i} className={classes.item}>
-                  <li> {el.itemName} </li>
-                  <li> {el.price}.00 </li>
-                  <li> {el.qty} </li>
+                  <li> {el.item_name} </li>
+                  <li> {el.price} </li>
+                  <li> {el.quantity} </li>
                   <li> ${el.qty * el.price} </li>
                 </ul>
               );
